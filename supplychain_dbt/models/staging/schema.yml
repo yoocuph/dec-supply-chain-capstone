@@ -1,0 +1,93 @@
+version: 2
+
+models:
+  - name: stg_inventory
+    description: "Daily inventory snapshots by product and warehouse."
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+      - name: warehouse_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_warehouses')
+              field: warehouse_id
+      - name: snapshot_date
+        tests:
+          - not_null
+
+  - name: stg_products
+    description: "Master list of products and their unit prices."
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+      - name: supplier_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_suppliers')
+              field: supplier_id
+
+  - name: stg_shipments
+    description: "Log of all shipments from warehouses to stores."
+    columns:
+      - name: shipment_id
+        tests:
+          - unique
+          - not_null
+      - name: store_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_stores')
+              field: store_id
+
+  - name: stg_suppliers
+    description: "Details of suppliers and their geographic locations."
+    columns:
+      - name: supplier_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_warehouses
+    description: "Warehouse locations and metadata."
+    columns:
+      - name: warehouse_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_stores
+    description: "Store locations and regions sourced from Google Sheets."
+    columns:
+      - name: store_id
+        tests:
+          - unique
+          - not_null
+  
+  - name: stg_sales
+    description: "Transaction records from the Postgres production database."
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: store_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_stores')
+              field: store_id
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: product_id

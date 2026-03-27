@@ -1,0 +1,15 @@
+supplychain_dbt:
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: my-dec-project-74633
+      dataset: supplychain_dec_model_dev 
+      threads: 4
+      # keyfile: ../TERRAFORM/gcp-key.json 
+      keyfile: /opt/airflow/creds/gcp-key.json
+      location: EU
+      priority: interactive
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+  target: dev

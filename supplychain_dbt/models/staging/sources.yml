@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: gcs_raw
+    database: my-dec-project-74633
+    schema: supplychain_raw_v2
+    tables:
+      - name: stg_s3_products
+      - name: stg_s3_inventory
+      - name: stg_s3_shipments
+      - name: stg_s3_suppliers
+      - name: stg_s3_warehouses
+      - name: stg_store_info_v2
+      - name: stg_s3_sales 

@@ -1,0 +1,6 @@
+dbt-bigquery
+apache-airflow-providers-google==10.3.0
+pandas
+sqlalchemy
+psycopg2-binary
+gspread
