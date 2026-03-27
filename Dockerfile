@@ -20,6 +20,6 @@ RUN pip install \
 COPY --chown=airflow:root dags/ /opt/airflow/dags/
 COPY --chown=airflow:root scripts/ /opt/airflow/scripts/
 COPY --chown=airflow:root supplychain_dbt/ /opt/airflow/supplychain_dbt/
-COPY --chown=airflow:root creds/ /opt/airflow/creds/
+COPY --chown=airflow:root creds* /opt/airflow/creds/
 
 WORKDIR /opt/airflow
