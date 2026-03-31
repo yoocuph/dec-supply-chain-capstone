@@ -1,5 +1,9 @@
 # SupplyChain360 Unified Data Platform
 
+**Unified Supply Chain Data Platform for Supplychain 360**  
+
+---
+
 ## Project Overview
 
 SupplyChain360 is a fast-growing retail distribution company in the United States that manages product distribution for hundreds of retail stores nationwide.
@@ -17,9 +21,9 @@ To address these challenges, this project implements a **Unified Supply Chain Da
 
 The platform ingests raw data from multiple sources, processes and models the data into a structured data warehouse, and enables analytical queries to support better decision-making.
 
----
+--- 
 
-# Business Objectives
+### Business Objectives
 
 The platform is designed to help SupplyChain360 answer critical operational questions such as:
 
@@ -34,6 +38,51 @@ By enabling these insights, the platform can support:
 * Supplier performance monitoring
 * Shipment tracking improvements
 * Demand forecasting across regions
+
+---
+
+# Project Structure
+
+```
+supplychain360-data-platform/
+│
+├── dags/
+│   └── airflow pipelines
+|        └── supply_chain_orchestration.py
+│
+├── ingestion/
+│   └── data extraction scripts
+│        └── extract_postgres_sales.py
+|        └── extract_product.py
+|        └── extract_storedata.py
+|
+├── transformations/
+│   └── supplychain_dbt models
+|        └── models
+|              └── staging
+|               └── intermediate
+|               └── marts
+│
+├── infrastructure/
+│   └── terraform configuration
+|           └── GCS
+|           └── Google BigQuery
+│
+├── docker/
+│   └── docker configuration
+│
+├── docs/
+│   └── architecure diagram.png
+|   └── presentation.ppt
+│
+└── README.md
+```
+
+---
+
+# Architecture Overview
+
+![architectural diagram](<docs/Pasted image.png>)
 
 ---
 
@@ -55,6 +104,24 @@ Sales tables are generated daily in the transactional PostgreSQL database under 
 
 ---
 
+# Choice of tools and Technology Stack
+
+The platform uses the following modern data engineering tools:
+
+| Tool                            | Purpose                           |
+| ------------------------------- | --------------------------------- |
+| Python                          | Data ingestion and processing     |
+| Apache Airflow                  | Workflow orchestration            |
+| GCS                             | Raw data storage                  |
+| BigQuery                        | Data warehouse                    |
+| dbt                             | Data modeling and transformations |
+| Docker                          | Containerization                  |
+| Terraform                       | Infrastructure as Code            |
+| GitHub Actions                  | CI/CD pipeline                    |
+
+---
+
+
 # System Architecture
 
 The platform follows a modern **data lakehouse architecture** consisting of several layers:
@@ -63,11 +130,11 @@ The platform follows a modern **data lakehouse architecture** consisting of seve
 
    * Extracts data from operational systems
    * Converts data into Parquet format
-   * Stores raw immutable data in cloud object storage
+   * Stores raw immutable data in cloud object storage (GCS)
 
 2. **Raw Data Layer**
 
-   * Stores source data exactly as received
+   * Stores source data exactly as received in GCS
    * Includes ingestion metadata
    * Enables reproducibility and auditing
 
@@ -88,25 +155,6 @@ The platform follows a modern **data lakehouse architecture** consisting of seve
 
 ---
 
-# Technology Stack
-
-The platform uses the following modern data engineering tools:
-
-| Tool                            | Purpose                           |
-| ------------------------------- | --------------------------------- |
-| Python                          | Data ingestion and processing     |
-| Apache Airflow                  | Workflow orchestration            |
-| AWS S3                          | Raw data storage                  |
-| Parquet                         | Columnar storage format           |
-| PostgreSQL                      | Source transactional data         |
-| dbt                             | Data modeling and transformations |
-| Snowflake / BigQuery / Redshift | Data warehouse                    |
-| Docker                          | Containerization                  |
-| Terraform                       | Infrastructure as Code            |
-| GitHub Actions                  | CI/CD pipeline                    |
-
----
-
 # Data Warehouse Design
 
 The analytical data model follows a **Star Schema** design.
@@ -114,16 +162,11 @@ The analytical data model follows a **Star Schema** design.
 ### Dimension Tables
 
 * `dim_products`
-* `dim_suppliers`
-* `dim_warehouses`
-* `dim_stores`
-* `dim_date`
+* `dim_locations`
 
 ### Fact Tables
 
-* `fact_sales`
-* `fact_inventory`
-* `fact_shipments`
+* `fct_supply_chain_health`
 
 This structure enables efficient analysis of:
 
@@ -140,19 +183,19 @@ The entire data pipeline is orchestrated using **Apache Airflow**.
 
 Airflow coordinates:
 
-1. Data extraction from all sources
-2. Loading raw datasets to object storage
-3. Data cleaning and validation
-4. Data warehouse loading
-5. dbt model execution
-6. Data quality checks
+1. Data extraction from all sources programatically
+2. Loading raw datasets to object storage (GCS)
+3. Data warehouse loading
+4. Data cleaning and validation (dbt)
+5. dbt model execution (dbt)
+6. Data quality checks (dbt)
 
 The pipelines are designed with production best practices including:
 
 * idempotent tasks
 * incremental data processing
 * retry mechanisms
-* failure alerting
+* failure alerting (airflow)
 
 ---
 
@@ -160,13 +203,10 @@ The pipelines are designed with production best practices including:
 
 All cloud infrastructure is provisioned using **Terraform**.
 
-Provisioned resources include:
+Provisioned cloud resources include:
 
-* Object storage buckets
-* Data warehouse infrastructure
-* Airflow execution environment
-* IAM roles and permissions
-* Parameter store for secure credentials
+* Object storage buckets (Google Cloud Storage)
+* Data warehouse infrastructure (Google BigQuery)
 
 Terraform state is stored in a remote backend to support collaborative infrastructure management.
 
@@ -183,7 +223,7 @@ The Docker image includes:
 * dbt project
 * required dependencies
 
-The image is pushed to a container registry for deployment.
+The image is pushed to a container registry for deployment (ducker hub).
 
 ---
 
@@ -202,34 +242,6 @@ A CI/CD pipeline is implemented using **GitHub Actions**.
 * Build Docker image
 * Push image to container registry
 * Deploy updated pipelines
-
----
-
-# Project Structure
-
-```
-supplychain360-data-platform/
-│
-├── dags/
-│   └── airflow pipelines
-│
-├── ingestion/
-│   └── data extraction scripts
-│
-├── transformations/
-│   └── dbt models
-│
-├── infrastructure/
-│   └── terraform configuration
-│
-├── docker/
-│   └── docker configuration
-│
-├── tests/
-│   └── pipeline tests
-│
-└── README.md
-```
 
 ---
 

@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]  # Runs every time you push to the main branch
+    branches: [ main ]  # my event
 
 jobs:
   ci-checks:

@@ -44,6 +44,7 @@ services:
       - ./creds:/opt/airflow/creds
     ports:
       - "8081:8080"  
+      - "8085:8085"
     command: >
       bash -c "airflow db upgrade &&
       airflow users create --username airflow --firstname yussuf --lastname alade --role Admin --email admin@example.com --password airflow || true &&

@@ -13,22 +13,18 @@ supplychain360-data-platform/
 
 ├── airflow/
 │   ├── dags/
-│   │   └── supplychain_pipeline_dag.py
-│   │
-│   ├── plugins/
-│   │
-│   └── airflow.cfg
-
-├── ingestion/
-│   ├── extract_s3_csv.py
-│   ├── extract_s3_json.py
-│   ├── extract_google_sheets.py
+│       └── supply_chain_orchestration.py
+│   
+│
+├── scripts/
+│   ├── extract_s3_data.py
 │   ├── extract_postgres_sales.py
-│   │
-│   └── utils/
-│       ├── aws_helpers.py
-│       ├── db_helpers.py
-│       └── sheet_helpers.py
+│   ├── extract_storedata.py
+│   └── alerts.py
+│ 
+│ 
+│              
+│       
 
 ├── processing/
 │   ├── clean_inventory.py
