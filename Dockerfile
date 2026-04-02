@@ -3,12 +3,12 @@ FROM apache/airflow:2.7.1-python3.9
 
 USER root
 
-# To install system dependencies if needed
+
 RUN apt-get update && apt-get install -y git && apt-get clean
 
 USER airflow
 
-# COPY requirements.txt /requirements.txt
+
 RUN pip install \
     "dbt-bigquery==1.7.0" \
     "pyarrow" \

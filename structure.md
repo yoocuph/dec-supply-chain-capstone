@@ -7,7 +7,7 @@ supplychain360-data-platform/
 
 ├── docs/
 │   ├── architecture_diagram.png
-│   ├── data_flow_diagram.png
+│   ├── models_diagram.png
 │   └── presentation/
 │       └── supplychain360_platform.pptx
 

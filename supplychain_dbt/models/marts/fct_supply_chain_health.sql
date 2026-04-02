@@ -15,7 +15,7 @@ with stock_metrics as (
         total_units_sold,
         total_revenue,
         is_low_stock,
-        -- Bringing in our new business intelligence metrics
+        -- Bringing in these new business intelligence metrics
         avg_daily_sales,
         inventory_cover_days,
         inventory_health_status

@@ -1,4 +1,4 @@
-{{ config(materialized='table') }} -- Making this a table improves downstream performance
+{{ config(materialized='table') }} -- Making this a table improves my downstream performance
 
 with daily_sales as (
     select

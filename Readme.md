@@ -159,6 +159,8 @@ The platform follows a modern **data lakehouse architecture** consisting of seve
 
 The analytical data model follows a **Star Schema** design.
 
+![model diagram](<docs/models_diagram.png>)
+
 ### Dimension Tables
 
 * `dim_products`

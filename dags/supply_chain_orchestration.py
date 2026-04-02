@@ -41,7 +41,7 @@ with DAG(
 
 
     # 2. dbt Run Task
-    # Note: We use --profiles-dir . and assume the key is in /opt/airflow/creds/
+    # Note: used --profiles-dir . and since the key is in /opt/airflow/creds/
     dbt_run = BashOperator(
         task_id='dbt_transformations',
         bash_command='cd /opt/airflow/supplychain_dbt && dbt run --profiles-dir .'
