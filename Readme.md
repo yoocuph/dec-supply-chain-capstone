@@ -260,9 +260,65 @@ Potential extensions of the platform include:
 
 # How to Run the Project
 
-Instructions for running the project locally and deploying infrastructure will be added as the implementation progresses.
+## Instructions for running the project locally and deploying infrastructure: Quick Start Guide: Running the Pipeline.
+
+This project is fully containerized. Follow these steps to deploy the environment using the pre-built Docker image
+
+1. Prerequisites
+   
+   * **Docker & Docker Compose** installed.
+
+   * **Google Cloud** Platform project with a Service Account key (gcp-key.json).
+
+   * **AWS** Credentials (Access Key & Secret Key) for S3 access.
+
+2. Clone the Repository
+
+```bash
+git clone https://github.com/yoocuph/supply-chain-capstone.git
+cd supply-chain-capstone
+```
+
+3. Environment Setup
+
+Create a `.env` file in the root directory and add your credentials. This file is ignored by Git for security.
+
+```
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+AWS_DEFAULT_REGION=eu-west-1
+SMTP_USER=your_email@gmail.com
+SMTP_PASSWORD=your_app_password
+```
+
+Place your Google Cloud Service Account key in a folder named `creds/` and rename it to `gcp-key.json`.
+
+4. Launch the Stack
+Run the following command. Docker will automatically pull the image `yoocuph/supply-chain-capstone:latest` from Docker Hub.
+
+```
+docker-compose up -d
+```
+
+5. Access the Pipeline
+
+   * Airflow UI: Open `http://localhost:8081`
+
+   * Credentials: Username: `airflow` | Password: `airflow`
+
+   * Trigger: Unpause the `supply_chain_full_pipeline` DAG and click the Play button.
+
+## Infrastructure Setup (Optional)
+If you are setting this up in a new GCP project, use the included Terraform files to provision the required BigQuery datasets and GCS buckets:
+
+```bash
+cd TERRAFORM
+terraform init
+terraform apply
+```
 
 ---
+
 
 # Author
 
